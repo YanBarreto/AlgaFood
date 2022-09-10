@@ -28,8 +28,9 @@ public class RestauranteService {
 	}
 	
 	public List<Restaurante> buscarPorNome(String nome){
-		return restauranteRepositoryImpl.buscarPorNome(nome, entityManager);
-	}
+		/* return restauranteRepositoryImpl.buscarPorNome(nome, entityManager); */
+		return restauranteRespository.findRestaurantesByNomeRestauranteContaining(nome);
+		}
 	
 	public Restaurante salvar(Restaurante r) {
 		return restauranteRepositoryImpl.salvar(r, restauranteRespository);
