@@ -1,44 +1,40 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
-@Entity
+
 @Data
-public class Usuario {
-	
+@Entity
+public class Pedido {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String nome;
-	private String email;
-	private String senha;
+	private BigDecimal subtotal;
+	private BigDecimal taxaFrete;
+	private BigDecimal valorTotal;
 	@CreationTimestamp
 	@Column(columnDefinition = "datetime")
 	private LocalDateTime dataCriacao;
+	@Column(columnDefinition = "datetime")
+	private LocalDateTime dataConfirmacao;
+	@Column(columnDefinition = "datetime")
+	private LocalDateTime dataCancelamento;
+	@Column(columnDefinition = "datetime")
+	private LocalDateTime dataEntrega;
+	@Embedded
+	private Endereco endereco;
 	
-	@ManyToMany
-	@JoinTable(
-			name="usuario_grupo",
-			joinColumns = @JoinColumn(name="fk_usuario"),
-			inverseJoinColumns = @JoinColumn(name="fk_grupo"))
-	private List<Grupo> listaGrupos = new ArrayList<Grupo>();
-	
-
 }
