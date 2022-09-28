@@ -1,4 +1,4 @@
-package com.example.demo.domain.model;
+package br.com.algafood.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

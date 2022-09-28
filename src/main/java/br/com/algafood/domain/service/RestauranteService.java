@@ -1,12 +1,12 @@
-package com.example.demo.domain.service;
+package br.com.algafood.domain.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.model.Restaurante;
-import com.example.demo.domain.repository.RestauranteRepository;
+import br.com.algafood.domain.model.Restaurante;
+import br.com.algafood.domain.repository.RestauranteRepository;
 
 
 @Service

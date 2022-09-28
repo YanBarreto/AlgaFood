@@ -1,9 +1,9 @@
-package com.example.demo.domain.repository;
+package br.com.algafood.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.model.Produto;
+import br.com.algafood.domain.model.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{

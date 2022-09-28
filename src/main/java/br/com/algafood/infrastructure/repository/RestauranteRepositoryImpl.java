@@ -1,4 +1,4 @@
-package com.example.demo.infrastructure.repository;
+package br.com.algafood.infrastructure.repository;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.domain.model.Restaurante;
+import br.com.algafood.domain.model.Restaurante;
 
 
 

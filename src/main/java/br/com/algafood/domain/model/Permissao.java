@@ -1,4 +1,4 @@
-package com.example.demo.domain.model;
+package br.com.algafood.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

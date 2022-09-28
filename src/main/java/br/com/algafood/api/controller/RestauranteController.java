@@ -1,4 +1,4 @@
-package com.example.demo.api.controller;
+package br.com.algafood.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.demo.domain.model.Restaurante;
-import com.example.demo.domain.service.RestauranteService;
+import br.com.algafood.domain.model.Restaurante;
+import br.com.algafood.domain.service.RestauranteService;
 
 @RestController
 @RequestMapping("restaurantes")
