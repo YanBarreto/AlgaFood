@@ -22,6 +22,7 @@ import com.example.demo.service.RestauranteService;
 @RequestMapping("restaurantes")
 public class RestauranteController {
 
+	
 	@Autowired
 	RestauranteService restauranteService;
 	
@@ -33,13 +34,11 @@ public class RestauranteController {
 	
 	@GetMapping("por-nome")
 	public ResponseEntity<?> listarPorNome(@RequestParam String nome){
-			try {
-				List<Restaurante> listaRestaurantes = restauranteService.buscarPorNome(nome);
-				return ResponseEntity.ok(listaRestaurantes);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return ResponseEntity.notFound().build();
-			}
+     List<Restaurante> restaurantesEncontrados = restauranteService.buscarPorNome(nome);
+     if(restaurantesEncontrados.isEmpty()) {
+    	 return ResponseEntity.notFound().build();
+     }
+     return ResponseEntity.ok(restaurantesEncontrados);
 	}
 	
 	@PostMapping

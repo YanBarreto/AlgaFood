@@ -2,12 +2,9 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.infrastructure.RestauranteRepositoryImpl;
 import com.example.demo.model.Restaurante;
 import com.example.demo.repository.RestauranteRepository;
 
@@ -16,29 +13,22 @@ import com.example.demo.repository.RestauranteRepository;
 public class RestauranteService {	
 	
 	@Autowired
-	RestauranteRepository restauranteRespository;
-	
-	@Autowired
-	EntityManager entityManager;
-	
-	RestauranteRepositoryImpl restauranteRepositoryImpl = new RestauranteRepositoryImpl();
+	RestauranteRepository restauranteRepository;
 	
 	public List<Restaurante> buscarTodos(){
-		return restauranteRepositoryImpl.buscar(restauranteRespository);
+		return restauranteRepository.findAll();
 	}
 	
 	public List<Restaurante> buscarPorNome(String nome){
-		/* return restauranteRepositoryImpl.buscarPorNome(nome, entityManager); */
-		return restauranteRespository.findRestaurantesByNomeRestauranteContaining(nome);
+		return restauranteRepository.buscarPorNome(nome);
 		}
 	
 	public Restaurante salvar(Restaurante r) {
-		return restauranteRepositoryImpl.salvar(r, restauranteRespository);
+		return restauranteRepository.save(r);
 	}
 	
 	public void deletarPorId(Long id) {
-		restauranteRepositoryImpl.deletarPorId(id, restauranteRespository);
-		return;
+		restauranteRepository.deleteById(id);
 	}
 
 }
