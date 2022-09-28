@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.demo.model.Restaurante;
-import com.example.demo.service.RestauranteService;
+import com.example.demo.domain.model.Restaurante;
+import com.example.demo.domain.service.RestauranteService;
 
 @RestController
 @RequestMapping("restaurantes")
 public class RestauranteController {
 
-	
 	@Autowired
 	RestauranteService restauranteService;
 	

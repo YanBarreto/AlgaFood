@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.api.controller;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Produto;
-import com.example.demo.repository.ProdutoRepository;
+import com.example.demo.domain.model.Produto;
+import com.example.demo.domain.repository.ProdutoRepository;
 
 @RestController
 @RequestMapping("produtos")
