@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algafood.domain.model.Restaurante;
+import br.com.algafood.domain.repository.ProdutoRepository;
 import br.com.algafood.domain.repository.RestauranteRepository;
 
 
@@ -15,20 +17,50 @@ public class RestauranteService {
 	@Autowired
 	RestauranteRepository restauranteRepository;
 	
+	@Autowired
+	ProdutoRepository produtoRepository;
+	
+	final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Restaurante não encontrado";
+	
+	
+	
 	public List<Restaurante> buscarTodos(){
 		return restauranteRepository.findAll();
 	}
 	
 	public List<Restaurante> buscarPorNome(String nome){
-		return restauranteRepository.buscarPorNome(nome);
+		
+		List<Restaurante> restaurantesEncontrados = restauranteRepository.buscarPorNome(nome);
+		
+		if(restaurantesEncontrados.isEmpty()) {
+			throw new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO);
+		}
+		return restaurantesEncontrados;
 		}
 	
+	
 	public Restaurante salvar(Restaurante r) {
-		return restauranteRepository.save(r);
+		
+		Restaurante restauranteNovo = restauranteRepository.save(r);
+		
+		r.getListaProdutos().forEach(  (produto) -> produto.setRestaurante(restauranteNovo));
+		
+		produtoRepository.saveAll(r.getListaProdutos());
+		
+		return restauranteRepository.findById(restauranteNovo.getId()).get();
 	}
 	
+	
+	
+	
 	public void deletarPorId(Long id) {
-		restauranteRepository.deleteById(id);
+		try {
+			restauranteRepository.deleteById(id);
+		}
+		catch(Exception e){
+			throw new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO);
+		}
+		
 	}
 
 }

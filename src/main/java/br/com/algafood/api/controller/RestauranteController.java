@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,18 +28,13 @@ public class RestauranteController {
 	RestauranteService restauranteService;
 	
 	@GetMapping
-	public ResponseEntity<?> listar(){
-		List<Restaurante> listaRestaurantes = restauranteService.buscarTodos();
-		return ResponseEntity.ok(listaRestaurantes);
+	public List<Restaurante> listar(){
+		return restauranteService.buscarTodos();
 	}
 	
 	@GetMapping("por-nome")
-	public ResponseEntity<?> listarPorNome(@RequestParam String nome){
-     List<Restaurante> restaurantesEncontrados = restauranteService.buscarPorNome(nome);
-     if(restaurantesEncontrados.isEmpty()) {
-    	 return ResponseEntity.notFound().build();
-     }
-     return ResponseEntity.ok(restaurantesEncontrados);
+	public List<Restaurante> listarPorNome(@RequestParam String nome){
+     return restauranteService.buscarPorNome(nome);
 	}
 	
 	@PostMapping
@@ -50,14 +47,11 @@ public class RestauranteController {
 		}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletarPorId(@PathVariable Long id){
-		try {
+	@ResponseStatus(value=HttpStatus.NO_CONTENT)
+	public void deletarPorId(@PathVariable Long id){
 			restauranteService.deletarPorId(id);
-			return ResponseEntity.noContent().build();
 			
-		}catch(Exception e){
-			return ResponseEntity.notFound().build();
-		}
-	}
 	
+	}
+
 }
