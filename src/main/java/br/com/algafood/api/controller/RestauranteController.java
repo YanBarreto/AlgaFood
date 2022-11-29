@@ -3,6 +3,8 @@ package br.com.algafood.api.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algafood.domain.model.Restaurante;
 import br.com.algafood.domain.service.RestauranteService;
 
@@ -34,11 +37,19 @@ public class RestauranteController {
 	
 	@GetMapping("por-nome")
 	public List<Restaurante> listarPorNome(@RequestParam String nome){
+		
+		try {
+			restauranteService.buscarPorNome(nome);
+		} catch (EntidadeNaoEncontradaException ex) {
+			throw new EntidadeNaoEncontradaException(ex.getMessage(), ex);
+		}
+		
      return restauranteService.buscarPorNome(nome);
 	}
 	
+	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody Restaurante r, UriComponentsBuilder uriComponentsBuilder ){
+	public ResponseEntity<?> salvar(@RequestBody @Valid Restaurante r, UriComponentsBuilder uriComponentsBuilder ){
 		
 		r = restauranteService.salvar(r);
 		URI uri = uriComponentsBuilder.path("/restaurantes/{id}").buildAndExpand(r.getId()).toUri();
@@ -49,9 +60,12 @@ public class RestauranteController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(value=HttpStatus.NO_CONTENT)
 	public void deletarPorId(@PathVariable Long id){
-			restauranteService.deletarPorId(id);
+			try {
+				restauranteService.deletarPorId(id);
+			}catch(Exception ex) {
+				throw new EntidadeNaoEncontradaException(ex.getMessage(), ex);
+			}
 			
-	
 	}
-
+	
 }

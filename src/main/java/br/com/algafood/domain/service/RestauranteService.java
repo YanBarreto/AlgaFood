@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
+import br.com.algafood.domain.model.Produto;
 import br.com.algafood.domain.model.Restaurante;
 import br.com.algafood.domain.repository.ProdutoRepository;
 import br.com.algafood.domain.repository.RestauranteRepository;
@@ -54,12 +55,8 @@ public class RestauranteService {
 	
 	
 	public void deletarPorId(Long id) {
-		try {
-			restauranteRepository.deleteById(id);
-		}
-		catch(Exception e){
-			throw new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO);
-		}
+		produtoRepository.deleteById(id);
+		restauranteRepository.deleteById(id);
 		
 	}
 
