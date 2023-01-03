@@ -29,6 +29,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired
 	MessageSource messageSource;
 
+
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request) {
 
@@ -88,23 +89,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente";
 
 		ProblemType problemType = ProblemType.FORMATO_INVALIDO;
-		
-		
-		List<Problema.FieldError> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
-				.map(fieldError -> {
-					
-					String mensagem = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
-					return Problema.FieldError.builder()
-						.fieldName(fieldError.getField())
-						.message(mensagem)
-						.build();
-					})
-				.collect(Collectors.toList());
-				
 
-		Problema problema = createProblemBuilder(status, problemType, detail) //Ainda posso continuar porque createProblemBuilder retorna um Builder de Problema.
-							.fieldErros(fieldErrors)
-							.build();
+		List<Problema.FieldError> fieldErrors = ex.getBindingResult().getFieldErrors().stream().map(fieldError -> {
+
+			String mensagem = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+
+			return Problema.FieldError.builder()
+					.fieldName(fieldError.getField())
+					.message(mensagem)
+					.build();
+		}
+
+		).collect(Collectors.toList());
+
+		Problema problema = createProblemBuilder(status, problemType, detail) // Ainda posso continuar porque
+																				// createProblemBuilder retorna um
+																				// Builder de Problema.
+				.fieldErros(fieldErrors).build();
 
 		return handleExceptionInternal(ex, problema, headers, status, request);
 	}
