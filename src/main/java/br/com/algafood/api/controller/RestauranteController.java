@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.algafood.Groups;
 import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algafood.domain.model.Restaurante;
 import br.com.algafood.domain.service.RestauranteService;
@@ -49,7 +51,7 @@ public class RestauranteController {
 	
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid Restaurante r, UriComponentsBuilder uriComponentsBuilder ){
+	public ResponseEntity<?> salvar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante r, UriComponentsBuilder uriComponentsBuilder ){
 		
 		r = restauranteService.salvar(r);
 		URI uri = uriComponentsBuilder.path("/restaurantes/{id}").buildAndExpand(r.getId()).toUri();

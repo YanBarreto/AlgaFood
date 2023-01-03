@@ -8,6 +8,7 @@ delete from produto;
 delete from restaurante;
 delete from usuario;
 delete from usuario_grupo;
+delete from estado;
 
 
 
@@ -19,6 +20,7 @@ alter table restaurante auto_increment = 1;
 alter table usuario auto_increment = 1;
 alter table usuario_grupo auto_increment = 1;
 alter table produto auto_increment = 1;
+alter table estado auto_increment = 1;
 
 
 
@@ -38,6 +40,12 @@ INSERT INTO algafoodapi.grupo (nome_grupo)
 	VALUES ('ADMIN');
 INSERT INTO algafoodapi.grupo (nome_grupo)
 	VALUES ('SIMPLES');
+
+INSERT INTO algafoodapi.estado (nome_estado) 
+	VALUES ("Bahia");
+
+INSERT INTO algafoodapi.estado (nome_estado) 
+	VALUES ("São Paulo");
 
 
 INSERT INTO algafoodapi.restaurante (nome_restaurante)

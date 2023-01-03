@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +25,9 @@ import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final String ARGUMENTO_INVALIDO_EXCEPTION = "O parâmetro '%s' recebeu o valor '%s', porém o valor esperado deve ser do tipo %s";
+	
+	@Autowired
+	MessageSource messageSource;
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request) {
@@ -84,11 +89,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ProblemType problemType = ProblemType.FORMATO_INVALIDO;
 		
+		
 		List<Problema.FieldError> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
-				.map(fieldError -> Problema.FieldError.builder()
+				.map(fieldError -> {
+					
+					String mensagem = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+					return Problema.FieldError.builder()
 						.fieldName(fieldError.getField())
-						.message(fieldError.getDefaultMessage())
-						.build())
+						.message(mensagem)
+						.build();
+					})
 				.collect(Collectors.toList());
 				
 
