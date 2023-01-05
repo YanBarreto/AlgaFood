@@ -41,7 +41,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, problema, null, status, request); // A REQUISIÇÃO É PASSADA PELO PROPRIO
 																				// SPRING.
-
 	}
 
 	@Override

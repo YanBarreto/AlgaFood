@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.algafood.Groups;
+import br.com.algafood.core.Groups;
 import br.com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import br.com.algafood.domain.model.Restaurante;
 import br.com.algafood.domain.service.RestauranteService;

@@ -1,4 +1,4 @@
-package br.com.algafood;
+package br.com.algafood.core;
 
 public interface Groups {
 	
